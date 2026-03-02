@@ -10,18 +10,21 @@
         #L_O { position: fixed; inset: 0; background: #000; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .WHITE-STRIKE { font-family: 'Orbitron', sans-serif; font-size: 100px; color: #fff; text-shadow: 0 0 80px #fff; animation: flash 0.3s infinite; }
         @keyframes flash { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
+        .radar-line { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: absolute; animation: scan 3s linear infinite; }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
     </style>
 </head>
 <body>
     <div id="L_O">
-        <div class="text-white/20 text-[6px] tracking-[30px] mb-10 uppercase">White_Dedicated_V1</div>
+        <div class="text-white/20 text-[6px] tracking-[30px] mb-10 uppercase">White_Radar_System</div>
         <input type="password" id="_PASS" placeholder="ACCESS_KEY" class="bg-black border-b border-white/20 p-4 text-white text-center w-80 mb-6 outline-none text-[12px] tracking-[15px]">
         <button onclick="_VAL()" class="text-white/40 text-[8px] tracking-[10px] uppercase border border-white/10 px-6 py-2">Activate_Radar</button>
     </div>
 
+    <div class="radar-line"></div>
     <div id="_SIGNAL" class="hidden flex flex-col items-center">
         <div class="WHITE-STRIKE">BRANCO</div>
-        <div class="mt-10 text-[10px] tracking-[15px] text-white/50 animate-pulse">PROTEÇÃO_ATIVADA_G0</div>
+        <div class="mt-10 text-[10px] tracking-[20px] text-white/50 animate-pulse">VALVE_VOID_DETECTED</div>
     </div>
     <div id="_STS" class="fixed top-10 text-[8px] tracking-[15px] text-white/10 uppercase">Deep_Scanning_White_Voids</div>
 
@@ -33,7 +36,7 @@
             if(document.getElementById('_PASS').value === "jarvis102") {
                 document.getElementById('L_O').style.display = 'none';
                 _ON = true; 
-                _VOZ("Radar de Brancos Online.");
+                _VOZ("Radar de Brancos Online. Escaneando vácuos.");
                 _RUN();
             }
         }
@@ -50,12 +53,12 @@
             const n = new Date(), s = n.getSeconds(), m = n.getMinutes();
             if(s !== _LS) {
                 _LS = s;
-                // Gatilho probabilístico de vácuo
+                // Gatilho de vácuo em segundos específicos
                 const isPotential = (m % 3 === 0 || m % 7 === 0) && (s === 12 || s === 32 || s === 52);
                 if(isPotential) {
-                    _VOZ("Oportunidade de Branco detectada.");
+                    _VOZ("Atenção. Oportunidade de Branco.");
                     document.getElementById('_SIGNAL').classList.remove('hidden');
-                    setTimeout(() => { document.getElementById('_SIGNAL').classList.add('hidden'); }, 8000);
+                    setTimeout(() => { document.getElementById('_SIGNAL').classList.add('hidden'); }, 8500);
                 }
             }
             requestAnimationFrame(_RUN);
