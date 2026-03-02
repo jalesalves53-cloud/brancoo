@@ -2,66 +2,59 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>AETHER | WHITE-DEDICATED</title>
+    <title>AETHER | WHITE-PREDICT V1</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=JetBrains+Mono:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #fff; font-family: 'JetBrains Mono', monospace; height: 100vh; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        body { background: #050505; color: #fff; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         #L_O { position: fixed; inset: 0; background: #000; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .WHITE-STRIKE { font-family: 'Orbitron', sans-serif; font-size: 100px; color: #fff; text-shadow: 0 0 80px #fff; animation: flash 0.3s infinite; }
-        @keyframes flash { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
-        .radar-line { width: 100%; height: 2px; background: rgba(255,255,255,0.05); position: absolute; animation: scan 3s linear infinite; }
-        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        .FLASH { font-family: 'Orbitron', sans-serif; font-size: 80px; text-shadow: 0 0 50px #fff; animation: strike 0.2s infinite; }
+        @keyframes strike { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.5; } }
     </style>
 </head>
 <body>
     <div id="L_O">
-        <div class="text-white/20 text-[6px] tracking-[30px] mb-10 uppercase">White_Radar_System</div>
-        <input type="password" id="_PASS" placeholder="ACCESS_KEY" class="bg-black border-b border-white/20 p-4 text-white text-center w-80 mb-6 outline-none text-[12px] tracking-[15px]">
-        <button onclick="_VAL()" class="text-white/40 text-[8px] tracking-[10px] uppercase border border-white/10 px-6 py-2">Activate_Radar</button>
+        <input type="password" id="_PASS" placeholder="WHITE_KEY" class="bg-black border-b border-white/10 p-4 text-white text-center w-64 outline-none tracking-[10px]">
+        <button onclick="_VAL()" class="mt-8 text-white/20 text-[8px] tracking-[5px] uppercase">Activate_Radar</button>
     </div>
 
-    <div class="radar-line"></div>
-    <div id="_SIGNAL" class="hidden flex flex-col items-center">
-        <div class="WHITE-STRIKE">BRANCO</div>
-        <div class="mt-10 text-[10px] tracking-[20px] text-white/50 animate-pulse">VALVE_VOID_DETECTED</div>
+    <div id="_SIGNAL" class="hidden">
+        <div class="FLASH text-white">BRANCO</div>
     </div>
-    <div id="_STS" class="fixed top-10 text-[8px] tracking-[15px] text-white/10 uppercase">Deep_Scanning_White_Voids</div>
 
     <script>
         const _SP = window.speechSynthesis;
         let _ON = false, _LS = -1;
 
-        function _VAL() {
-            if(document.getElementById('_PASS').value === "jarvis102") {
-                document.getElementById('L_O').style.display = 'none';
-                _ON = true; 
-                _VOZ("Radar de Brancos Online. Escaneando vácuos.");
-                _RUN();
-            }
-        }
-
         function _VOZ(t) {
             _SP.cancel();
             const m = new SpeechSynthesisUtterance(t);
-            m.lang = 'pt-BR'; m.pitch = 0.8; m.rate = 2.0;
+            m.lang = 'pt-BR'; m.pitch = 0.9; m.rate = 2.3;
             _SP.speak(m);
         }
 
-        function _RUN() {
+        function _VAL() {
+            if(document.getElementById('_PASS').value === "jarvis102") {
+                document.getElementById('L_O').style.display = 'none';
+                _ON = true; _VOZ("Radar de Brancos em varredura profunda.");
+                _RADAR();
+            }
+        }
+
+        function _RADAR() {
             if(!_ON) return;
             const n = new Date(), s = n.getSeconds(), m = n.getMinutes();
             if(s !== _LS) {
                 _LS = s;
-                // Gatilho de vácuo em segundos específicos
-                const isPotential = (m % 3 === 0 || m % 7 === 0) && (s === 12 || s === 32 || s === 52);
-                if(isPotential) {
-                    _VOZ("Atenção. Oportunidade de Branco.");
+                // Lógica de Vácuo Preditiva 04:00 AM
+                const p = (m % 4 === 0 || m % 9 === 0) && (s === 12 || s === 32 || s === 52);
+                if(p) {
+                    _VOZ("Alvo Branco Detectado.");
                     document.getElementById('_SIGNAL').classList.remove('hidden');
-                    setTimeout(() => { document.getElementById('_SIGNAL').classList.add('hidden'); }, 8500);
+                    setTimeout(() => { document.getElementById('_SIGNAL').classList.add('hidden'); }, 9000);
                 }
             }
-            requestAnimationFrame(_RUN);
+            requestAnimationFrame(_RADAR);
         }
     </script>
 </body>
